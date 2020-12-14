@@ -1,3 +1,5 @@
+// File only used in Section 3: Understanding the Basics
+
 const fs = require('fs');
 const { request } = require('http');
 
