@@ -4,10 +4,13 @@ const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 
-const adminRoutes = require('./routes/admin');
+const adminData = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 
 const app = express();
+
+app.set('view engine', 'pug');
+app.set('views', 'views');
 
 // NOTE on methods
 // app.use works for all HTTP requests.
@@ -25,7 +28,7 @@ app.use('/', (req, res, next) => {
 
 // '/admin' path filter, for all routes in adminRoutes
 // admin.js routes registered. ORDER MATTERS.
-app.use('/admin', adminRoutes);
+app.use('/admin', adminData.routes);
 
 app.use(shopRoutes);
 
