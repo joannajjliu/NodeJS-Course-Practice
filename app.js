@@ -4,8 +4,10 @@ const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 
-const adminData = require('./routes/admin');
+const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
+
+const errorController = require('./controllers/error');
 
 const app = express();
 
@@ -28,16 +30,11 @@ app.use('/', (req, res, next) => {
 
 // '/admin' path filter, for all routes in adminRoutes
 // admin.js routes registered. ORDER MATTERS.
-app.use('/admin', adminData.routes);
+app.use('/admin', adminRoutes);
 
 app.use(shopRoutes);
 
-app.use((req, res, next) => {// default url is "/", when not included.
-
-    //chaining, .send just needs to be the last method called
-    res.status(404).sendFile(path.join(__dirname, 'views', '404.html'));
-
-});
+app.use(errorController.get404);
 
 const server = http.createServer(app);
 
